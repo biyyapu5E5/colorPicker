@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import '../globals.css'
 import Confetti from 'react-confetti';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateScore, updateButtons, pickColor, updateTimer, evaluateMsg, updateReset } from '../redux/slice';
+import { updateScore, updateButtons, pickColor, updateTimer, evaluateMsg, updateReset } from '../../../redux/slice';
 
 
 export default function ColorPage() {
