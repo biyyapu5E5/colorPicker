@@ -1,0 +1,158 @@
+'use client'
+
+import { useEffect, useState } from 'react';
+import '../globals.css'
+import Confetti from 'react-confetti';
+import AnimatedDonut from '../demo/page';
+
+const colorClasses: string[] = ['black', 'brown', 'blue', 'green', 'grey', 'gold', 'orange', 'pink', 'purple', 'red', 'violet', 'white', 'yellow']
+const default_dict = { text: '', color: '', options: [] };
+const default_score = { correct: 0, wrong: 0, attempted: 0 };
+
+
+export default function ColorPage() {
+
+  const [dict, setDict] = useState<{ text: string, color: string, options: string[] }>(default_dict);
+  const [score, setScore] = useState<{ correct: number, wrong: number, attempted: number }>(default_score);
+  const [start, setStart] = useState<boolean>(true);
+  const [restart, setRestart] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(10);
+  const [msg, setMsg] = useState<{ message: string, wonState: boolean }>({ message: "Don't give up! That's okay, everyone stumbles!", wonState: false });
+
+  function PickColor() {
+    console.log(colorClasses.length);
+    const random = (arr: string[]): [number, number] => {
+      let randText = Math.floor(Math.random() * arr.length);
+      let randColor = Math.floor(Math.random() * arr.length);
+
+      while (randText === randColor) {
+        randColor = Math.floor(Math.random() * arr.length);
+      }
+
+      return [randText, randColor];
+    }
+    const shuffle = (array: string[]): string[] => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+    const [text, color] = random(colorClasses);
+    let array: string[] = colorClasses.filter((col, index) => text !== index && color !== index)
+    const [col1, col2] = random(array);
+    let options = shuffle([colorClasses[text], colorClasses[color], array[col1], array[col2]]);
+
+    setDict({
+      text: colorClasses[text],
+      color: colorClasses[color],
+      options
+    })
+  }
+
+  useEffect(() => {
+    PickColor();
+  }, []);
+
+  let options = dict['options']
+
+  function handleCheck(option: string): void {
+    setScore((prev) => {
+      return {
+        attempted: prev.attempted + 1,
+        correct: option === dict.text ? prev.correct + 1 : prev.correct,
+        wrong: option === dict.text ? prev.wrong : prev.wrong + 1
+      }
+    })
+    PickColor();
+  }
+
+  function handleStart(): void {
+    handleTimer();
+    setStart(false);
+    PickColor();
+  }
+
+  function handleReset(): void {
+    setDict(default_dict);
+    setScore(default_score);
+    setStart(true);
+    setRestart(false);
+    PickColor();
+  }
+
+  function handleTimer() {
+    let intervalId: NodeJS.Timeout;
+    intervalId = setInterval(() => {
+      setTimer((prev) => {
+        if (prev === 0) {
+          clearInterval(intervalId);
+          setStart(false);
+          setRestart(!restart);
+          return 10;
+        }
+        return prev - 1;
+      })
+    }, 1000)
+  }
+
+  useEffect(() => {
+    if (restart && score.attempted !== 0) {
+      if (score.attempted === score.correct) {
+        setMsg({ message: 'Well played!!!😍😎🎉🎊', wonState: true });
+      } else if (score.attempted - score.correct <= 2) {
+        setMsg({ message: 'So close!😊', wonState: false });
+      } else {
+        setMsg({ message: 'Oops, try again!☹️', wonState: false });
+      }
+    }
+    else if (score.attempted === 0) {
+      setMsg({ message: 'Zero effort detected...You Skipped the fun..??🤨', wonState: false })
+    }
+  }, [restart]);
+
+  return (
+    <section className='bg-[oklch(48.9%_0.046_257.417)] flex justify-center items-center  min-h-screen font-karla'>
+      <div className='text-white rounded-xl bg-[oklch(28.7%_0.09_281.288)] flex flex-col items-center p-12'>
+        <h2 className='text-4xl -mt-5 mb-5 font-bold'>Color Picker</h2>
+        {msg.wonState && <Confetti />}
+        <div className='flex flex-col gap-2'>
+          <div className='relative'>
+            <div className='text-sm flex justify-between'>
+              <p className='cursor-pointer flex group peer'>
+                <span className='underline underline-offset-5 '>Help</span>
+                <span className='block mx-1 w-4 h-4 text-[10px] self-end text-center border rounded-full'>?</span>
+              </p>
+              <div className='invisible peer-hover:visible  w-[50%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'>
+              <span className='text-sm leading-0'>Pick the color of the text, not the name of the text color </span>
+              <br />
+              Example:
+              <br />
+              <span className='text-green-500'>Red</span>
+              <br />
+              Answer: <span className='block h-3 w-3 bg-green-500'></span>
+            </div>
+              <span>Timer : {timer}</span>
+            </div>
+          </div>
+          <h1 style={{ color: dict.text }} className='self-center'>{dict.color.toUpperCase()}</h1>
+          <div className='flex w-[100%]' style={{ cursor: start || restart ? 'not-allowed' : 'pointer'  }}>
+            <span style={{ backgroundColor: options[0] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[0]) }}></span>
+            <span style={{ backgroundColor: options[1] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[1]) }}></span>
+            <span style={{ backgroundColor: options[2] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[2]) }}></span>
+            <span style={{ backgroundColor: options[3] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[3]) }}></span>
+          </div>
+        </div>
+        {restart && <button onClick={handleReset} className='border-2 border-purple-600 px-8 py-1 my-5 rounded-xl hover:font-bold cursor-pointer hover:bg-purple-600'>Reset</button>}
+        {start && <button onClick={handleStart} className='text-white hover:text-black border-2 border-white px-8 py-1 my-5 rounded-xl hover:bg-gray-200 hover:font-bold cursor-pointer'>Start</button>}
+        {restart && <div className="flex gap-10">
+          <AnimatedDonut value={score.correct} max={score.attempted} label="Correct" color="#22C55E" /> 
+          <AnimatedDonut value={score.wrong} max={score.attempted} label="Wrong" color="#EF4444" />   
+          <AnimatedDonut value={score.attempted} max={score.attempted} label="Attempted" color="#3B82F6" />
+        </div>}
+        <p className='mt-4'>{restart && msg.message}</p>
+      </div>
+    </section>
+
+  )
+}
