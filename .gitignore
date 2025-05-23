@@ -19,12 +19,6 @@ redux/
 color-duplicate/
 /out/
 
-node_modules
-.next
-.env
-*.log
-.DS_Store
-out/
 
 
 # production

@@ -21,7 +21,7 @@ export default function ColorPage() {
 
   function PickColor() {
     const random = (arr: string[]): [number, number] => {
-      let randText = Math.floor(Math.random() * arr.length);
+      const randText = Math.floor(Math.random() * arr.length);
       let randColor = Math.floor(Math.random() * arr.length);
 
       while (randText === randColor) {
@@ -38,7 +38,7 @@ export default function ColorPage() {
       return array;
     };
     const [text, color] = random(colorClasses);
-    let array: string[] = colorClasses.filter((col, index) => text !== index && color !== index)
+    const array: string[] = colorClasses.filter((col, index) => text !== index && color !== index)
     const [col1, col2] = random(array);
     let options = shuffle([colorClasses[text], colorClasses[color], array[col1], array[col2]]);
 
@@ -53,7 +53,7 @@ export default function ColorPage() {
     PickColor();
   }, []);
 
-  let options = dict['options']
+  const options = dict['options']
 
   function handleCheck(option: string): void {
     setScore((prev) => {
@@ -81,8 +81,7 @@ export default function ColorPage() {
   }
 
   function handleTimer() {
-    let intervalId: NodeJS.Timeout;
-    intervalId = setInterval(() => {
+    const intervalId: NodeJS.Timeout = setInterval(() => {
       setTimer((prev) => {
         if (prev === 0) {
           clearInterval(intervalId);
@@ -108,7 +107,7 @@ export default function ColorPage() {
     else if (score.attempted === 0) {
       setMsg({ message: 'Zero effort detected...You Skipped the fun..??🤨', wonState: false })
     }
-  }, [restart]);
+  });
 
   return (
     <section className='bg-[oklch(48.9%_0.046_257.417)] flex justify-center items-center  min-h-screen font-karla'>
