@@ -5,12 +5,13 @@ import '../globals.css'
 import Confetti from 'react-confetti';
 import AnimatedDonut from '../demo/page';
 
+const default_dict = { text: '', color: '', options: [] };
+const default_score = { correct: 0, wrong: 0, attempted: 0 };
+const colorClasses: string[] = ['black', 'brown', 'blue', 'green', 'grey', 'gold', 'orange', 'pink', 'purple', 'red', 'violet', 'white', 'yellow']
 
 
 export default function ColorPage() {
-  const colorClasses: string[] = ['black', 'brown', 'blue', 'green', 'grey', 'gold', 'orange', 'pink', 'purple', 'red', 'violet', 'white', 'yellow']
-  const default_dict = { text: '', color: '', options: [] };
-  const default_score = { correct: 0, wrong: 0, attempted: 0 };
+
   const [dict, setDict] = useState<{ text: string, color: string, options: string[] }>(default_dict);
   const [score, setScore] = useState<{ correct: number, wrong: number, attempted: number }>(default_score);
   const [start, setStart] = useState<boolean>(true);
