@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import '../globals.css'
 import Confetti from 'react-confetti';
-import AnimatedDonut from '../animated-donut/page';
+import AnimatedDonut from '../animated-donut/AnimatedDonut';
 
 const default_dict = { text: '', color: '', options: [] };
 const default_score = { correct: 0, wrong: 0, attempted: 0 };
