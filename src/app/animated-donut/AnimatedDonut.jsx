@@ -25,7 +25,7 @@ export default function AnimatedDonut({ value, max, label, color }) {
       } else {
         clearInterval(interval);
       }
-    }, 10); // animation speed
+    }, 10); 
 
     return () => clearInterval(interval);
   }, [percentage]);

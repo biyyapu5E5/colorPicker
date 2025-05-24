@@ -1,5 +1,4 @@
 'use client'
-// "build": "next build",
 
 import { useEffect, useState } from 'react';
 import '../globals.css'
@@ -100,7 +99,6 @@ export default function ColorPage() {
       if (score.attempted === score.correct) {
         setMsg({ message: 'Well played!!!😍😎🎉🎊', wonState: true });
       } else if (score.attempted - score.correct == 2 || score.attempted - score.correct == 1) {
-        console.log(score.attempted - score.correct)
         setMsg({ message: 'So close!😊', wonState: false });
       } else {
         setMsg({ message: 'Oops, try again!☹️', wonState: false });
@@ -114,34 +112,28 @@ export default function ColorPage() {
   return (
     <section className='bg-[oklch(48.9%_0.046_257.417)] flex justify-center items-center  min-h-screen font-karla'>
       <div className='text-white rounded-xl bg-[oklch(28.7%_0.09_281.288)] flex flex-col items-center p-12'>
-        <h2 className='text-4xl -mt-5 mb-5 font-bold'>Color Picker</h2>
+        <p className='text-5xl -mt-5 mb-5 font-bold image-text'> Color Picker </p>
         {msg.wonState && <Confetti />}
-        <div className='flex flex-col gap-2'>
-          <div className='relative'>
-            <div className='text-sm flex justify-between'>
-              <p className='cursor-pointer flex group peer'>
-                <span className='underline underline-offset-5 '>Help</span>
-                <span className='block mx-1 w-4 h-4 text-[10px] self-end text-center border rounded-full'>?</span>
-              </p>
-              <div className='invisible peer-hover:visible  w-[62%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'>
-              {/* <div className='w-[50%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'> */}
-                <span className='text-sm leading-0'>Pick the color of the text, not the name of the text color </span>
-                <br />
-                <br />
-                Example:
-                <br />
-                <span className='text-green-500'>Red</span>
-                <br />
-                Answer: <span className='block h-3 w-3 bg-green-500'></span>
-              </div>
-              <span>Timer : {timer}</span>
+        <div className='flex flex-col gap-2 relative'>
+          <div className='text-sm flex justify-between'>
+            <p className='cursor-pointer flex group peer'>
+              <span className='underline underline-offset-5 '>Help</span>
+              <span className='block mx-1 w-4 h-4 text-[10px] self-end text-center border rounded-full'>?</span>
+            </p>
+            <div className='invisible peer-hover:visible  w-[62%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'>
+              <span className='text-sm leading-0'>Pick the color of the text, not the name of the text color </span>
+              <br />
+              <br />
+              Example:
+              <br />
+              <span className='text-green-500'>Red</span>
+              <br />
+              Answer: <span className='block h-3 w-3 bg-green-500'></span>
             </div>
+            <p className='flex gap-2 w-[21%]'><span>Timer :</span><span className={`font-bold ${timer < 3 ? 'text-red-700' : 'text-inherit'}`}>{timer}</span></p>
           </div>
           <h1 style={{ color: dict.text }} className='self-center'>{dict.color.toUpperCase()}</h1>
-          {/* <div className='flex w-[100%]' style={{ cursor: start || restart ? 'not-allowed' : 'pointer'  }}> */}
-          {/* <div className="flex w-[100%]" style={{ cursor: start || restart ? 'not-allowed' : 'pointer', pointerEvents: start || restart ? 'none' : 'auto', }} > */}
-          {/* <div className='flex w-[100%]' style={{ cursor: start || restart ? 'not-allowed pointer-events:none' : 'pointer' }}> */}
-          <div className={`flex w-full ${ start || restart ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer' }`} >
+          <div className={`flex w-full ${start || restart ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`} >
             <span style={{ backgroundColor: options[0] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[0]) }}></span>
             <span style={{ backgroundColor: options[1] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[1]) }}></span>
             <span style={{ backgroundColor: options[2] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[2]) }}></span>

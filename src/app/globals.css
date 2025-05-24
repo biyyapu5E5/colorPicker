@@ -10,3 +10,11 @@
     height: 20px;
     width: 30px;
 }
+
+.image-text {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu8iuAbajTnpjMT3aHHvd18bcyRjf9Z2wPvA&s');
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
