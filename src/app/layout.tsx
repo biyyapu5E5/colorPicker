@@ -7,7 +7,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet" />
       </head>
       <body>
         {/* <Provider store = {store}>
