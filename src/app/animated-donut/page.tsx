@@ -11,14 +11,8 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-interface Props {
-  value: number;
-  max: number;
-  label: string;
-  color: string;
-}
 
-const AnimatedDonut = ({ value, max, label, color }: Props) => {
+const AnimatedDonut = ({ value, max, label, color }:{ value: number; max: number; label: string; color: string}) => {
   const [current, setCurrent] = useState(0);
   const percentage = (value / max) * 100;
 
