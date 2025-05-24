@@ -12,7 +12,7 @@ import {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-const AnimatedDonut = ({ value, max, label, color }:{ value: number; max: number; label: string; color: string}) => {
+export default function AnimatedDonut({ value, max, label, color }:{ value: number; max: number; label: string; color: string}) {
   const [current, setCurrent] = useState(0);
   const percentage = (value / max) * 100;
 
@@ -61,5 +61,3 @@ const AnimatedDonut = ({ value, max, label, color }:{ value: number; max: number
     </div>
   );
 };
-
-export default AnimatedDonut;
