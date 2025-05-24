@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import '../globals.css'
 import Confetti from 'react-confetti';
-import AnimatedDonut from '../demo/page';
+import AnimatedDonut from '../animated-donut/page';
 
 const default_dict = { text: '', color: '', options: [] };
 const default_score = { correct: 0, wrong: 0, attempted: 0 };
@@ -98,7 +98,8 @@ export default function ColorPage() {
     if (restart && score.attempted !== 0) {
       if (score.attempted === score.correct) {
         setMsg({ message: 'Well played!!!😍😎🎉🎊', wonState: true });
-      } else if (score.attempted - score.correct <= 2) {
+      } else if (score.attempted - score.correct == 2 || score.attempted - score.correct == 1) {
+        console.log(score.attempted - score.correct)
         setMsg({ message: 'So close!😊', wonState: false });
       } else {
         setMsg({ message: 'Oops, try again!☹️', wonState: false });
@@ -107,7 +108,7 @@ export default function ColorPage() {
     else if (score.attempted === 0) {
       setMsg({ message: 'Zero effort detected...You Skipped the fun..??🤨', wonState: false })
     }
-  });
+  }, [restart, score.attempted]);
 
   return (
     <section className='bg-[oklch(48.9%_0.046_257.417)] flex justify-center items-center  min-h-screen font-karla'>
@@ -121,31 +122,36 @@ export default function ColorPage() {
                 <span className='underline underline-offset-5 '>Help</span>
                 <span className='block mx-1 w-4 h-4 text-[10px] self-end text-center border rounded-full'>?</span>
               </p>
-              <div className='invisible peer-hover:visible  w-[50%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'>
-              <span className='text-sm leading-0'>Pick the color of the text, not the name of the text color </span>
-              <br />
-              Example:
-              <br />
-              <span className='text-green-500'>Red</span>
-              <br />
-              Answer: <span className='block h-3 w-3 bg-green-500'></span>
-            </div>
+              <div className='invisible peer-hover:visible  w-[62%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'>
+              {/* <div className='w-[50%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'> */}
+                <span className='text-sm leading-0'>Pick the color of the text, not the name of the text color </span>
+                <br />
+                <br />
+                Example:
+                <br />
+                <span className='text-green-500'>Red</span>
+                <br />
+                Answer: <span className='block h-3 w-3 bg-green-500'></span>
+              </div>
               <span>Timer : {timer}</span>
             </div>
           </div>
           <h1 style={{ color: dict.text }} className='self-center'>{dict.color.toUpperCase()}</h1>
-          <div className='flex w-[100%]' style={{ cursor: start || restart ? 'not-allowed' : 'pointer'  }}>
-            <span style={{ backgroundColor: options[0] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[0]) }}></span>
-            <span style={{ backgroundColor: options[1] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[1]) }}></span>
-            <span style={{ backgroundColor: options[2] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[2]) }}></span>
-            <span style={{ backgroundColor: options[3] }} className='w-20 h-20 block' onClick={() => { handleCheck(options[3]) }}></span>
+          {/* <div className='flex w-[100%]' style={{ cursor: start || restart ? 'not-allowed' : 'pointer'  }}> */}
+          {/* <div className="flex w-[100%]" style={{ cursor: start || restart ? 'not-allowed' : 'pointer', pointerEvents: start || restart ? 'none' : 'auto', }} > */}
+          {/* <div className='flex w-[100%]' style={{ cursor: start || restart ? 'not-allowed pointer-events:none' : 'pointer' }}> */}
+          <div className={`flex w-full ${ start || restart ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer' }`} >
+            <span style={{ backgroundColor: options[0] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[0]) }}></span>
+            <span style={{ backgroundColor: options[1] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[1]) }}></span>
+            <span style={{ backgroundColor: options[2] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[2]) }}></span>
+            <span style={{ backgroundColor: options[3] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[3]) }}></span>
           </div>
         </div>
-        {restart && <button onClick={handleReset} className='border-2 border-purple-600 px-8 py-1 my-5 rounded-xl hover:font-bold cursor-pointer hover:bg-purple-600'>Reset</button>}
-        {start && <button onClick={handleStart} className='text-white hover:text-black border-2 border-white px-8 py-1 my-5 rounded-xl hover:bg-gray-200 hover:font-bold cursor-pointer'>Start</button>}
+        {restart && <button onClick={handleReset} className='border-2 border-purple-600 px-8 py-1 my-5 rounded-xl hover:font-bold cursor-pointer hover:bg-purple-600 self-center'>Reset</button>}
+        {start && <button onClick={handleStart} className='text-white hover:text-black border-2 border-white px-8 py-1 my-5 rounded-xl hover:bg-gray-200 hover:font-bold cursor-pointer self-center'>Start</button>}
         {restart && <div className="flex gap-10">
-          <AnimatedDonut value={score.correct} max={score.attempted} label="Correct" color="#22C55E" /> 
-          <AnimatedDonut value={score.wrong} max={score.attempted} label="Wrong" color="#EF4444" />   
+          <AnimatedDonut value={score.correct} max={score.attempted} label="Correct" color="#22C55E" />
+          <AnimatedDonut value={score.wrong} max={score.attempted} label="Wrong" color="#EF4444" />
           <AnimatedDonut value={score.attempted} max={score.attempted} label="Attempted" color="#3B82F6" />
         </div>}
         <p className='mt-4'>{restart && msg.message}</p>
