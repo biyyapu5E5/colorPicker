@@ -1,4 +1,5 @@
 'use client'
+// "build": "next build",
 
 import { useEffect, useState } from 'react';
 import '../globals.css'
@@ -40,12 +41,12 @@ export default function ColorPage() {
     const [text, color] = random(colorClasses);
     const array: string[] = colorClasses.filter((col, index) => text !== index && color !== index)
     const [col1, col2] = random(array);
-    let options = shuffle([colorClasses[text], colorClasses[color], array[col1], array[col2]]);
+    const optionsList = shuffle([colorClasses[text], colorClasses[color], array[col1], array[col2]]);
 
     setDict({
       text: colorClasses[text],
       color: colorClasses[color],
-      options
+      options: optionsList
     })
   }
 
