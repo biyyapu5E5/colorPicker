@@ -112,7 +112,7 @@ export default function ColorPage() {
   return (
     <section className='bg-[oklch(48.9%_0.046_257.417)] flex justify-center items-center  min-h-screen font-karla'>
       <div className='text-white rounded-xl bg-[oklch(28.7%_0.09_281.288)] flex flex-col items-center p-12'>
-        <p className='text-5xl -mt-5 mb-5 font-bold image-text'> Color Picker </p>
+        <p className='text-5xl -mt-5 mb-5 font-bold'> Color Picker </p>
         {msg.wonState && <Confetti />}
         <div className='flex flex-col gap-2 relative'>
           <div className='text-sm flex justify-between'>
