@@ -56,7 +56,7 @@ export default function ColorPage() {
   const options = dict['options']
 
   function handleCheck(event : React.MouseEvent<HTMLDivElement>): void {
-    let target = event.target as HTMLElement;
+    let target = event.target as HTMLElement;  {/* Type Assertion */}
     let option = target.style.backgroundColor;
     setScore((prev) => {
       return {
@@ -118,11 +118,11 @@ export default function ColorPage() {
         {msg.wonState && <Confetti />}
         <div className='flex flex-col gap-2 relative'>
           <div className='text-sm flex justify-between'>
-            <p className='cursor-pointer flex group peer'>
+            <p className='cursor-pointer flex group peer' tabIndex={0}>
               <span className='underline underline-offset-5 '>Help</span>
               <span className='block mx-1 w-4 h-4 text-[10px] self-end text-center border rounded-full'>?</span>
             </p>
-            <div className='invisible peer-hover:visible  w-[62%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'>
+            <div className='invisible peer-hover:visible peer-focus:visible  w-[62%] text-slate-500 font-medium font-serif absolute top-6 bg-gray-100 p-4 rounded-lg'>
               <span className='text-sm leading-0'>Pick the color of the text, not the name of the text color </span>
               <br />
               <br />
