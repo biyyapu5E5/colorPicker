@@ -137,10 +137,11 @@ export default function ColorPage() {
           <h1 style={{ color: dict.text }} className='self-center'>{dict.color.toUpperCase()}</h1>
           {/* Event Delegation*/}
           <div className={`flex w-full ${start || restart ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`} onClick = {handleCheck}>  
-            <span style={{ backgroundColor: options[0] }} className='w-20 h-20 block transform hover:scale-110' ></span>
-            <span style={{ backgroundColor: options[1] }} className='w-20 h-20 block transform hover:scale-110' ></span>
-            <span style={{ backgroundColor: options[2] }} className='w-20 h-20 block transform hover:scale-110' ></span>
-            <span style={{ backgroundColor: options[3] }} className='w-20 h-20 block transform hover:scale-110' ></span>
+            {
+              options.map((option, index) => {
+                return <span key = {index} style={{ backgroundColor: option }} className='w-20 h-20 block transform hover:scale-110' ></span>
+              })
+            }
           </div>
         </div>
         {restart && <button onClick={handleReset} className='border-2 border-purple-600 px-8 py-1 my-5 rounded-xl hover:font-bold cursor-pointer hover:bg-purple-600 self-center'>Reset</button>}
