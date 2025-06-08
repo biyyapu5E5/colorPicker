@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../globals.css'
 import Confetti from 'react-confetti';
 import AnimatedDonut from '../animated-donut/AnimatedDonut';
@@ -55,7 +55,9 @@ export default function ColorPage() {
 
   const options = dict['options']
 
-  function handleCheck(option: string): void {
+  function handleCheck(event : React.MouseEvent<HTMLDivElement>): void {
+    let target = event.target as HTMLElement;
+    let option = target.style.backgroundColor;
     setScore((prev) => {
       return {
         attempted: prev.attempted + 1,
@@ -133,11 +135,12 @@ export default function ColorPage() {
             <p className='flex gap-2 w-[21%]'><span>Timer :</span><span className={`font-bold ${timer < 3 ? 'text-red-700' : 'text-inherit'}`}>{timer}</span></p>
           </div>
           <h1 style={{ color: dict.text }} className='self-center'>{dict.color.toUpperCase()}</h1>
-          <div className={`flex w-full ${start || restart ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`} >
-            <span style={{ backgroundColor: options[0] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[0]) }}></span>
-            <span style={{ backgroundColor: options[1] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[1]) }}></span>
-            <span style={{ backgroundColor: options[2] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[2]) }}></span>
-            <span style={{ backgroundColor: options[3] }} className='w-20 h-20 block transform hover:scale-110' onClick={() => { handleCheck(options[3]) }}></span>
+          {/* Event Delegation*/}
+          <div className={`flex w-full ${start || restart ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`} onClick = {handleCheck}>  
+            <span style={{ backgroundColor: options[0] }} className='w-20 h-20 block transform hover:scale-110' ></span>
+            <span style={{ backgroundColor: options[1] }} className='w-20 h-20 block transform hover:scale-110' ></span>
+            <span style={{ backgroundColor: options[2] }} className='w-20 h-20 block transform hover:scale-110' ></span>
+            <span style={{ backgroundColor: options[3] }} className='w-20 h-20 block transform hover:scale-110' ></span>
           </div>
         </div>
         {restart && <button onClick={handleReset} className='border-2 border-purple-600 px-8 py-1 my-5 rounded-xl hover:font-bold cursor-pointer hover:bg-purple-600 self-center'>Reset</button>}
